@@ -1,5 +1,6 @@
 from BinaryTree import *
 import numpy as np
+import functools
 import random
 
 
@@ -79,15 +80,20 @@ def reproduction(arbol1, arbol_lista_1, arbol2, arbol_lista_2, tasa_mutacion):
     return child1_total, child2_total
 
 
-def replacement(list_trees, porcentaje_seleccion):
+def replacement(list_trees, porcentaje_seleccion, tasa_mutacion):
     parents = selection(list_trees, porcentaje_seleccion)
     num_children = len(list_trees)-len(parents)
     children = []
     count = 0
     while count < num_children:
-        dad, mom = random.choice(parents)
-        child1, child2 = reproduction(dad[0], dad[1], mom[0], mom[1])
+        dad, mom = random.sample(parents, 2)
+        child1, child2 = reproduction(dad[0], dad[1], mom[0], mom[1], tasa_mutacion)
         children.append(child1)
         children.append(child2)
         count += 2
     return parents + children
+
+
+def get_mean_fitness(list_trees):
+    suma_total = functools.reduce(lambda acc, x: acc + x[2], list_trees, 0)
+    return suma_total / len(list_trees)

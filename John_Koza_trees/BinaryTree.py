@@ -24,25 +24,16 @@ class BinaryTree:
         self.root = node
 
     def print_tree(self, node, level=0):
+        """Imprime el árbol en la terminal y devuelve la representación como texto."""
         if node:
-            print(" " * level * 2 + str(node.value))  # Mostrar el valor del nodo con indentación
-            if node.left:
-                self.print_tree(node.left, level + 1)  # Recursión para imprimir los hijos
-            if node.right:
-                self.print_tree(node.right, level + 1)
+            print(" " * level * 2 + str(node.value))
+            tree_str = " " * level * 2 + str(node.value) + "\n"
+            tree_str += self.print_tree(node.left, level + 1)
+            tree_str += self.print_tree(node.right, level + 1)
+            return tree_str
+        return ""  
 
-    def height(self):
-        def height_aux(pos, height):
-            if not pos:
-                return height
-            else:
-                height_left = height_aux(pos.left, height + 1)
-                height_right = height_aux(pos.right, height + 1)
-                if height_left > height_right:
-                    return height_left
-                return height_right
-            
-        return height_aux(self.root, 0) - 1
+
 
 def build_tree(function_list):
     arbol = BinaryTree()
@@ -102,7 +93,7 @@ def fitness_arbol(arbol):
             return valor
 
     resultado = fitness_arbol_aux(arbol.root)
-    return np.log(np.linalg.norm(resultado-observations))
+    return np.sum(np.abs(resultado-observations))
 
 
 def calculo(funcion, valor1, valor2):
