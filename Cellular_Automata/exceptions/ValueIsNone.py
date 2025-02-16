@@ -1,0 +1,2 @@
+class ValueIsnone(Exception):
+    pass
