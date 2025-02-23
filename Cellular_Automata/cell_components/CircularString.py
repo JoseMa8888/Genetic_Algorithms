@@ -36,8 +36,8 @@ class CircularString():
         # It gets all values from the circularString
         pos: Node = self.root
         result: List[str] = [pos.value]
-        pos = pos.next
+        pos = pos.after
         while pos != self.root:
             result.append(pos.value)
-            pos = pos.next
+            pos = pos.after
         return result

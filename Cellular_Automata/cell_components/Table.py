@@ -11,7 +11,7 @@ class Table:
         neighborhood   - List[str], it must be not None
         reaction    - List[str], it must be not None
 
-        The neighborhood is a list of string of 0 and 1, the length must be 2 ** length of each string,
+        The neighborhood is a list of string of 0 and 1, the length must be 2 ** length of each string and they must be odd,
         they must be unique and each of the string has the same lenght
 
         Reaction is the output for the neighborhood, it could be a string of 0 or 1, the length of neighborhood
@@ -37,10 +37,11 @@ class Table:
         # Returns true if respects the specifications
         length: int = len(neighborhood)
         exponent: int = len(neighborhood[0])
+        odd: bool = exponent % 2 == 1 
         is_exponent: bool = 2**exponent == length
         unicos: bool = length == len(set(neighborhood))
         same_lenght_string: bool = all([len(i)==exponent for i in neighborhood])
-        return is_exponent and unicos and same_lenght_string
+        return odd and is_exponent and unicos and same_lenght_string
 
 
     def reaction_correct(self, reaction: List[str], neighborhood: List[str]):
@@ -60,3 +61,14 @@ class Table:
     @property
     def reaction(self) -> List[str]:
         return self.__reaction
+    
+
+    def set_dictionary(self) -> Dict[str, str]:
+        """
+        Creates a dictionary with the values in the table
+        This is for a better use of the structure
+        """
+        result_dict: Dict[str, str] = {}
+        for neighbor, react in zip(self.neighborhood, self.reaction):
+            result_dict[neighbor] = react
+        return result_dict

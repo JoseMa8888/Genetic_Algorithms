@@ -30,19 +30,33 @@ class TestNode(unittest.TestCase):
             self.node1.value = None
 
 
-    def test_changing_next(self):
-        self.node1.next = self.node2
-        self.assertEqual(self.node1.next, self.node2)
+    def test_changing_after_before(self):
+        self.node1.after = self.node2
+        self.node1.before = self.node3
+        self.assertEqual(self.node1.after, self.node2)
+        self.assertEqual(self.node1.before, self.node3)
 
         with self.assertRaises(ValueIsnone):
-            self.node1.next = None
+            self.node1.after = None
 
 
-    def test_circular(self):
-        self.node1.next = self.node2
-        self.node2.next = self.node3
-        self.node3.next = self.node1 
-        self.assertTrue(self.node1.is_circular())
+    def test_is_circular(self):
+        node1 = Node("A")
+        node2 = Node("B")
+        node3 = Node("C")
+        
+        node1.after = node2
+        node2.after = node3
+        node3.after = node1
+        
+        node1.before = node3
+        node2.before = node1
+        node3.before = node2
+        
+        self.assertTrue(node1.is_circular())
+        self.assertTrue(node2.is_circular())
+        self.assertTrue(node3.is_circular())
+        
 
 if __name__ == "__main__":
     unittest.main()
