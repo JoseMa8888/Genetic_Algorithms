@@ -1,0 +1,2 @@
+class ReactionIncorrect(Exception):
+    pass

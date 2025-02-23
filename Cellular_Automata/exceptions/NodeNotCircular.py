@@ -1,0 +1,2 @@
+class NodeNotCircular(Exception):
+    pass

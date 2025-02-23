@@ -1,0 +1,2 @@
+class CircularStringInappropriate(Exception):
+    pass
