@@ -1,0 +1,2 @@
+class IntegerError(Exception):
+    pass
